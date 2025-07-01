@@ -1,0 +1,75 @@
+services:
+  odoo-db-init:
+    image: odoo:18.0-20250618
+    command: "/scripts/initialize_db.sh"
+    depends_on:
+      odoo-db:
+        condition: service_healthy
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+      - ./scripts:/scripts
+    environment:
+      HOST: odoo-db
+      DB_PORT: 5432
+      USER: ${ODOO_DB_USER}
+      ODOO_DB_NAME: ${ODOO_DB_NAME}
+      MODULES: ${ODOO_MODULES}
+      PASSWORD_FILE: /run/secrets/postgresql_password
+    secrets:
+      - postgresql_password
+    networks:
+      - odoo-app
+
+  odoo:
+    image: odoo:18.0-20250618
+    depends_on:
+      odoo-db:
+        condition: service_healthy
+      odoo-db-init:
+        condition: service_completed_successfully
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+    environment:
+      HOST: odoo-db
+      USER: ${ODOO_DB_USER}
+      PASSWORD_FILE: /run/secrets/postgresql_password
+    secrets:
+      - postgresql_password
+    ports:
+      - "8069:8069"
+    networks:
+      - odoo-app
+
+  odoo-db:
+    image: postgres:15.13-alpine3.22
+    environment:
+      POSTGRES_DB: ${ODOO_DB_NAME}
+      POSTGRES_USER: ${ODOO_DB_USER}
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgresql_password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+    secrets:
+      - postgresql_password
+    networks:
+      - odoo-app
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${ODOO_DB_NAME} -U ${ODOO_DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  odoo-db-data:
+  odoo-web-data:
+
+secrets:
+  postgresql_password:
+    file: .odoo_pg_pass
+
+networks:
+  odoo-app:

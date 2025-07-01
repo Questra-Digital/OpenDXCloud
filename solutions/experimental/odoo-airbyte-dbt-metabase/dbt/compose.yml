@@ -1,0 +1,7 @@
+services:
+  dbt:
+    image: ghcr.io/dbt-labs/dbt-postgres:latest
+    volumes:
+      - ./:/usr/app
+    working_dir: /usr/app
+    entrypoint: ["/bin/sh"]

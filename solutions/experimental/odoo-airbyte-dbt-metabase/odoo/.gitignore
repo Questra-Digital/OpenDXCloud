@@ -1,0 +1,2 @@
+# Ignoring Secret files
+.odoo_pg_pass

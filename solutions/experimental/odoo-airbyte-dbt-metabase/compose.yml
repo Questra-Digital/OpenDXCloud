@@ -1,0 +1,5 @@
+include:
+  - ./odoo/compose.yml
+  - ./airbyte/compose.yml
+  - ./dbt/compose.yml
+  - ./metabase/compose.yml
