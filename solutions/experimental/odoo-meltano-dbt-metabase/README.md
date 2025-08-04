@@ -1,6 +1,6 @@
-# Odoo with Business Intelligence (Metabase+dbt+airbyte)
+# Odoo with Business Intelligence (Metabase+dbt+meltano)
 
-This solution is an experimental solution that offers opinionated and integrated setup of Odoo with Airbyte, DBT and Metabase for running enterprises with intelligence.
+This solution is an experimental solution that offers opinionated and integrated setup of Odoo with Meltano, DBT and Metabase for running enterprises with intelligence.
 
 ## 🧠 Who Benefits Most from This Stack?
 ### 1. 🏢 Growing Businesses Lacking Operational Visibility
@@ -8,14 +8,14 @@ This solution is an experimental solution that offers opinionated and integrated
 
 This stack enables:
 - Odoo: to manage sales, inventory, purchasing, and operations
-- Airbyte: to extract raw data from Odoo’s PostgreSQL
+- Meltano: to extract raw data from Odoo’s PostgreSQL
 - dbt: to transform raw data into meaningful business metrics
 - Metabase: to visualize KPIs for informed decision-making
 
 ### 2. 🧰 Companies with Fragmented Tools and No Unified Dashboard
 > "Do you have data spread across tools (like spreadsheets, ERPs, legacy systems), but no single source of truth for insights?"
 
-Airbyte enables data consolidation, dbt standardizes your logic, and Metabase offers self-service BI.
+Meltano enables data consolidation, dbt standardizes your logic, and Metabase offers self-service BI.
 
 ### 3. 🛠 Operations-Heavy Businesses Seeking Better Inventory/Logistics Oversight
 > "Do you manage stock or purchases but have no real-time insight into movement, costs, or fulfillment delays?"
@@ -25,7 +25,7 @@ Use Odoo’s stock, purchase, and product modules for operational control, and M
 ### 4. 👩‍💻 Teams Without Full-Time Data Engineers
 > "Do you want to improve reporting and automation without hiring a full data engineering team?"
 
-- Airbyte handles data ingestion with minimal code
+- Meltano handles data ingestion with minimal code
 - dbt enables analysts to build logic in SQL
 - Metabase offers intuitive dashboards without BI vendor lock-in
 
@@ -50,7 +50,7 @@ You need to install:
 - Clone the repository using `git clone git@github.com:Questra-Digital/OpenDXCloud.git`
 
 **For Odoo Setup**
-- Change the director to Odoo using `cd ./OpenDXCloud/solutions/experimental/odoo-airbyte-dbt-metabase/odoo`
+- Change the director to Odoo using `cd ./OpenDXCloud/solutions/experimental/odoo-meltano-dbt-metabase/odoo`
 - Rename `.env.example` file to `.env`. And update the values of all environment variables as per your needs
 - Rename `.odoo_pg_pass.example` file to `.odoo_pg_pass`. And update the file text to contain password
 - Run the project using `docker compose up -d`
